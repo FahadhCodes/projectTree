@@ -80,6 +80,25 @@ def treeConstr(targetColumn, Df):
     return data
 
 
+def tree_json(targetColumn, Df):
+    current_main_node = tree(targetColumn, Df)["main_node"]
+    jsonData = {"name": current_main_node,
+                "branches": {}}
+
+    for x in Df[current_main_node].unique():
+        Df1 = Df.loc[Df[current_main_node] == x].loc[:, [
+            col for col in Df.columns if col != current_main_node]]
+        # Df1 is splited version of Df (filtering based same valued current_main_node column  {main_node=high infomation gain column} )
+        found = [True if value != Df1[targetColumn].values[0] else False for value in Df1[targetColumn].values]
+        is_mixed = True in found
+        if is_mixed:
+            jsonData['branches'][x] = tree_json(targetColumn, Df1)
+            # print(treeConstr(Df1)['struct'])
+        else:
+            jsonData['branches'][x] = Df1[targetColumn].values[0]
+    return jsonData
+
+
 Df = pd.read_csv('dataset1.csv')
 
 info = tree('Attend?', Df)
@@ -100,7 +119,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('test.html', Node=Node, NodeValue=NodeValue, leafValue=LeafValue, count=count)
+    return render_template('test.html', Node=Node, NodeValue=NodeValue, LeafValue=LeafValue, count=count)
 
 
 if __name__ == "__main__":
