@@ -4,40 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEST</title>
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
   </head>
   <body>
-    <div class="pyth">
-      <ul>
-        {%for i in range(count)%}
-        <li>{{Node[i]}} | {{NodeValue[i]}} | {{LeafValue[i]}}</li>
-        {%endfor%}
-      </ul>
-    </div>
     <div class="container" style="display: flex; justify-content: center">
-      <svg width="1000" height="2000" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid">
+      <svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid">
         <g fill="none" stroke="gray" stroke-width="1">
-          <!-- <path
+          <path
             d="M 300 200 L 500 100 L 700 200 M 200 300 L 300 200 L 400 300 M 600 300 L 700 200 L 800 300 M 150 400 L 200 300 L 250 400 M 350 400 L 400 300 L 450 400 M 550 400 L 600 300 L 650 400 M 750 400 L 800 300 L 850 400"
-          ></path> -->
+          ></path>
         </g>
         <g fill="aqua" stroke="black" stroke-width="1">
-          {%for i in range(count)%}
-          <!---->
-          {%if i==0%}
           <!-- root -->
-          <circle cx="500" cy="100" r="15">
-            <title>ROOT:{{Node[i]}}</title>
-          </circle>
-          {%endif%}
-          <!---->
-          <!---->
-          {%if i != 0 %}
-          <!-- SPLIT -->
-          <text y="{{i}}00">{{Node[i]}} | {{NodeValue[i]}} | {{LeafValue[i]}}</text>
-          <circle cx="300" cy="{{i}}00" r="15" fill="red"></circle>
-          {%endif%}
-          <!---->
-          {%endfor%}
+          <circle cx="500" cy="100" r="15"></circle>
 
           <!-- lv1 -->
           <circle cx="300" cy="200" r="15"></circle>

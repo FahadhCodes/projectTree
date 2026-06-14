@@ -2,6 +2,10 @@ from flask import Flask, render_template
 import pandas as pd
 import numpy as np
 import re
+import json
+
+Df = pd.read_csv('dataset1.csv')
+targetColumn = 'Attend?'
 
 
 def tree(targetColumn, dataset):
@@ -99,7 +103,9 @@ def tree_json(targetColumn, Df):
     return jsonData
 
 
-Df = pd.read_csv('dataset1.csv')
+with open('tree.json', 'w') as f:
+    json.dump(tree_json(targetColumn, Df), f)
+
 
 info = tree('Attend?', Df)
 tRee = treeConstr('Attend?', Df)
@@ -119,7 +125,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('test.html', Node=Node, NodeValue=NodeValue, LeafValue=LeafValue, count=count)
+    return render_template('test.html')
 
 
 if __name__ == "__main__":
